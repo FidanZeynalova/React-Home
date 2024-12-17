@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  background-color: transparent;
+}
+.header {
+  width: 100%;
+  background-color: ghostwhite;
+  .container {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 20px;
+    .logo-navbar {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      .logo {
+        font-size: 18px;
+        color: black;
+        font-weight: bold;
+      }
+      .navbar {
+        ul {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          font-size: 18px;
+          li a {
+            color: black;
+          }
+        }
+      }
+    }
+    .button {
+      button {
+        padding: 10px 20px;
+        color: black;
+        border: 1px solid black;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 17px;
+        transition: background-color 0.3s ease;
+        &:hover {
+          background-color: #212529;
+          color: white;
+
+        }
+        span {
+          width: 50px;
+          height: 50px;
+          background-color: black;
+          color: white;
+          padding: 5px;
+          font-size: 17px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0px auto;
+  padding: 50px;
+  background-color: #212529;
+  gap: 15px;
+  p {
+    color: white;
+    font-size: 65px;
+    font-weight: bold;
+    text-align: center;
+  }
+  span {
+    color: gray;
+    font-size: 25px;
+  }
+}
+.products{
+  width: 1200px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 15px;
+  .product{
+    width: 100%;
+    padding: 10px;  
+    border: 1px solid rgba(0, 0, 0, 0.303);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    position: relative;
+    del{
+      text-decoration: line-through;
+    }
+    img{
+      width: 100%;
+      object-fit: cover;
+    }
+    span#sale{
+      background-color: #212529;
+      color: whitesmoke;
+      padding: 0 10px;
+      border-radius: 10px;
+      right: 15px;
+      top: 15px;
+      position: absolute;
+    }
+    p span{
+      opacity: .8;
+    }
+    button{
+      padding: 10px 20px;
+      color: black;
+      border: 1px solid black;
+      border-radius:8px;
+      font-size: 17px;
+      width: 140px;
+      margin: 0px auto;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: black;
+        border: 1px solid black;
+        color: white;
+      }
+    }
+    .content{
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
+.footer{
+  background-color: #212529;
+ span{
+  margin: 0px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+  text-align: center;
+ }
+}
