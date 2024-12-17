@@ -11,8 +11,7 @@ function Product({name,price,description,isDiscount,Discount,isSale}) {
       <p> {isDiscount && <span><del>{Discount}$</del> - </span>} {price}$</p>
       <p>{description}</p>
       <button>Add to Card</button>
-      </div>
-      <span id='sale'> {isSale && <span>Sale</span>}</span>
+      </div> {isSale && <span id='sale'>Sale</span>}
     </div>
   )
 }

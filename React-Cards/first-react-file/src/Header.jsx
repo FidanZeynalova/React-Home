@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Header() {
+let [count,setState] = useState(0)
+  function handleDicrease() {
+      setState(++count)
+  }
+  function handleIncrease() {
+    if (count> 0) {
+      setState(--count)
+    }else{
+      setState(0)
+    }
+}
+function handleReset() {
+  setState(0)
+}
+
+
   return (
     <div className='header'>
       <div className="container">
@@ -17,7 +33,10 @@ function Header() {
             </div>
         </div>
         <div className="button">
-            <button>Card <span>1</span></button>
+            <button onClick={handleDicrease}>+</button>
+            <span>{count}</span>
+            <button onClick={handleIncrease}>-</button>
+            <button onClick={handleReset}>Reset</button>
         </div>
       </div>
     </div>
