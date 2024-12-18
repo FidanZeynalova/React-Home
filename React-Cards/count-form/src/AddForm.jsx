@@ -7,6 +7,7 @@ function AddForm() {
     let [newStudentAge, setNewStudentAge] = useState("")
     let [btnText, setBtnText] = useState("Hide All Students")
     let [inputText, setInputText] = useState("")
+    let [fontSize, setFontSize] = useState(20)
 
 
     function handleDelete(id) {
@@ -20,7 +21,12 @@ function AddForm() {
             name: newStudentName,
             age: newStudentAge
         }
+        if(newStudentName.trim() == ""|| newStudentAge.trim() ==""){
+            alert("bosluq qoyma")
+        }else{
         setMyStudents([...myStudents, newStudent])
+
+        }
         setNewStudentName("")
         setNewStudentAge("")
     }
@@ -53,6 +59,16 @@ function AddForm() {
     }
     function handleReset(e) {
         setInputText("")
+        setFontSize(20)
+    }
+    function handleIncrease() {
+        if (fontSize > 10) {
+            setFontSize(fontSize - 1)
+        }
+    }
+    function handleDecrease() {
+        setFontSize((fontSize + 1))
+
     }
 
     return (
@@ -88,9 +104,17 @@ function AddForm() {
             </ol>
             <hr />
             <div className="search-input">
-                <input type="text" placeholder='add text' value={inputText} onChange={(e)=>handleText(e)} />
+                <input type="text" placeholder='add text' value={inputText} onChange={(e) => handleText(e)} />
                 <p>Inputun Text - <span> {inputText}</span></p>
-                <button onClick={()=>handleReset()}>Reset</button>
+                <button onClick={() => handleReset()}>Reset</button>
+            </div>
+            <hr />
+            <div className="control-fontSize"></div>
+            <span style={{ fontSize: fontSize + "px" }}>Adjust my font size!</span>
+            <div className="btns">
+                <button onClick={() => handleIncrease()}>Increase</button>
+                <button onClick={() => handleDecrease()}>Decrease</button>
+                <button onClick={() => handleReset()}>Reset</button>
             </div>
         </div>
     )
