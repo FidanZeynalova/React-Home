@@ -21,6 +21,7 @@ function Button() {
         <button onClick={handleDisincrease}>-</button>
         <button onClick={handleReset}>Reset</button>
       </div>
+      <hr />
     </div>
   )
 }

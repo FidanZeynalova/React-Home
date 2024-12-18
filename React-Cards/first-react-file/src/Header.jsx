@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 function Header() {
 let [count,setState] = useState(0)
+let [display,setDisplay] = useState("none")
   function handleDicrease() {
       setState(++count)
   }
@@ -14,6 +15,14 @@ let [count,setState] = useState(0)
 }
 function handleReset() {
   setState(0)
+}
+function handleDisplay() {
+  // e.preventDefault()
+  if (display == "none") {
+    setDisplay("block")
+  }else{
+    setDisplay("none")
+  }
 }
 
 
@@ -28,7 +37,15 @@ function handleReset() {
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
-                    <li><a href="#">Shop ▼</a></li>
+                    <li><a href="#" onClick={()=>handleDisplay()}>Shop ▼</a>
+                    <div className="nav"  style={{display:display}}>
+                       <ul>
+                           <li><a href="#">All Products</a></li>
+                           <li><a href="#">Popular Items</a></li>
+                           <li><a href="#">New Arrivals</a></li>
+                       </ul>
+                    </div>
+                    </li>
                 </ul>
             </div>
         </div>
