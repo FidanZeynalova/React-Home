@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+table {
+  width: 80%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+th,
+td {
+  padding: 12px 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e1e1e1;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 15px;
+  margin: 10px 5px;
+  border: 1px solid #4CAF50;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background-color: white;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+  }
+}
+
+form {
+  width: 600px;
+  z-index: 3;
+  background-color: white;
+  padding: 20px;
+  position: fixed;
+  top: 30%;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    align-items: center;
+
+    input {
+      width: 560px;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 18px;
+      &:focus{
+        outline: none;
+        border: 1px solid #4CAF50;
+      }
+    }
+  }
+}
+
+/* Loader's CSS */
+.loader {
+  --s: 40px;
+  height: calc(var(--s)*0.9);
+  width: calc(var(--s)*5);
+  --v1: transparent, #000 0.5deg 108deg, #0000 109deg;
+  --v2: transparent, #000 0.5deg 36deg, #0000 37deg;
+  -webkit-mask:
+    conic-gradient(from 54deg at calc(var(--s)*0.68) calc(var(--s)*0.57), var(--v1)),
+    conic-gradient(from 90deg at calc(var(--s)*0.02) calc(var(--s)*0.35), var(--v2)),
+    conic-gradient(from 126deg at calc(var(--s)*0.5) calc(var(--s)*0.7), var(--v1)),
+    conic-gradient(from 162deg at calc(var(--s)*0.5) 0, var(--v2));
+  -webkit-mask-size: var(--s) var(--s);
+  -webkit-mask-composite: xor, destination-over;
+  mask-composite: exclude, add;
+  -webkit-mask-repeat: repeat-x;
+  background: linear-gradient(#ffb940 0 0) left/0% 100% #ddd no-repeat;
+  animation: l20 2s infinite linear;
+}
+
+@keyframes l20 {
+
+  90%,
+  100% {
+    background-size: 100% 100%
+  }
+}
+.add{
+  border: 1px solid #4CAF50;
+background-color: #4CAF50;
+color: white;
+position: fixed;
+right: 20px;
+bottom: 20px;
+/* padding: 10px; */
+font-size: 30px;
+border-radius: 50%;
+height: 80px;
+width: 80px;
+text-align: center;
+transition: all .5s ease;
+cursor: pointer;
+z-index: 3;
+h1{
+  text-align: center;
+  position: absolute;
+  top: 5px;
+  right: 22px;
+}
+&:hover{
+  background-color: #fff;
+  color: #4CAF50;
+  border: 1px solid #4CAF50;
+  transform: rotate(720deg);
+}
+}
+.overlay{
+  background-color: #000;
+  opacity: .5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+}
+.exit{
+  background-color: red;
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  padding: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid red;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 10px;
+  transition: all .5s ease;
+  &:hover{
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+  }
+}
