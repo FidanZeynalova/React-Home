@@ -1,106 +1,209 @@
-import axios from "axios"
-import { useEffect } from "react"
-import React, { useState } from 'react'
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function AxiosTable() {
-    let [datas, setDatas] = useState([])
-    let [show, setShow] = useState(true)
-    let [name, setName] = useState("")
-    let [price, setPrice] = useState("")
-    let [stock, setStok] = useState("")
-    let [display,setDisplay] = useState("none")
+    let [datas, setDatas] = useState([]);
+    let [show, setShow] = useState(true);
+    let [name, setName] = useState("");
+    let [price, setPrice] = useState("");
+    let [stock, setStok] = useState("");
+    let [display, setDisplay] = useState("none");
+    let [editId, setEditId] = useState("");
 
-
+    // Data fetch
     function getData() {
         axios.get("https://northwind.vercel.app/api/products")
             .then(res => {
-                setDatas(res.data)
-                setShow(false)
-            })
+                setDatas(res.data);
+                setShow(false);
+            });
     }
-    async function handleDelete(id) {
-        await axios.delete("https://northwind.vercel.app/api/products/" + id)
-            .then(() => {
-                let filtered = datas.filter(data => data.id !== id)
-                setDatas(filtered)
-            })
 
+    // Delete 
+    async function handleDelete(id) {
+        await axios.delete(`https://northwind.vercel.app/api/products/${id}`)
+            .then(() => {
+                let filtered = datas.filter(data => data.id !== id);
+                setDatas(filtered);
+            });
     }
+
+    // Add form submit
     async function handleAddForm(e) {
-        e.preventDefault()
+        e.preventDefault();
         let newData = {
             name: name,
             unitPrice: price,
-            unitsInStock: stock
-        }
+            unitsInStock: stock,
+        };
         await axios.post("https://northwind.vercel.app/api/products", newData)
-            .then((res) => setDatas([...datas, res.data]))
-     setName("")
-     setPrice("")
-     setStok("")
-     setDisplay("none")
-        console.log(newData);
-        console.log(newData);
-
+            .then((res) => setDatas([...datas, res.data]));
+        setName("");
+        setPrice("");
+        setStok("");
+        setDisplay("none");
     }
-    function handleAdd(){
-        if(display = "none"){
-            setDisplay("block")
+
+    // Edit (datani block etmek)
+    function handleEdit(id) {
+        setEditId(id);
+        setDisplay("block");
+        const editData = datas.find(data => data.id === id);
+        setName(editData.name);
+        setPrice(editData.unitPrice);
+        setStok(editData.unitsInStock);
+    }
+
+    // Edit form submit
+    async function handleEditForm(e) {
+        e.preventDefault();
+        const updateData = {
+            name: name,
+            unitPrice: price,
+            unitsInStock: stock,
+        };
+
+        await axios.put(`https://northwind.vercel.app/api/products/${editId}`, updateData)
+            .then((res) => {
+                const updatedDatas = datas.map(data =>
+                    data.id === editId ? res.data : data
+                );
+                setDatas(updatedDatas);
+            });
+
+        setName("");
+        setPrice("");
+        setStok("");
+        setDisplay("none");
+    }
+
+    // form acmak
+    function handleAdd() {
+        if (display === "none") {
+            setDisplay("block");
         }
     }
+
+    // formu baglamaq
     function handleExit() {
-        setDisplay("none")
+        setDisplay("none");
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData();
+    }, []);
 
     return (
         <div className="table-container">
             <h1>North Wind Datalari</h1>
-            <form onSubmit={(e) => handleAddForm(e)} style={{display:display}}>
+
+            {/* Add Form */}
+            <form onSubmit={handleAddForm} style={{ display: display }}>
                 <h1>Add Form</h1>
                 <div className="inputs">
-                    <input type="text" required placeholder="Name..." value={name} onChange={(e) => setName(e.target.value)} />
-                    <input type="number" required placeholder="unitPrice..." value={price} onChange={(e) => setPrice(e.target.value)} />
-                    <input type="number" required placeholder="unitsInStock..." value={stock} onChange={(e) => setStok(e.target.value)} />
+                    <input
+                        type="text"
+                        required
+                        placeholder="Name..."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        required
+                        placeholder="unitPrice..."
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        required
+                        placeholder="unitsInStock..."
+                        value={stock}
+                        onChange={(e) => setStok(e.target.value)}
+                    />
                 </div>
                 <button>Add</button>
-            <div className="exit" onClick={()=>handleExit()}><h4>X</h4></div>
+                <div className="exit" onClick={handleExit}><h4>X</h4></div>
             </form>
+
+            {/* Edit Form */}
+            <form onSubmit={handleEditForm} style={{ display: display }}>
+                <h1>Edit Form</h1>
+                <div className="inputs">
+                    <input
+                        type="text"
+                        required
+                        placeholder="New Name..."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        required
+                        placeholder="New unitPrice..."
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        required
+                        placeholder="New unitsInStock..."
+                        value={stock}
+                        onChange={(e) => setStok(e.target.value)}
+                    />
+                </div>
+                <button>Submit</button>
+                <div className="exit" onClick={handleExit}><h4>X</h4></div>
+            </form>
+
             <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Unit Price</th>
-                    <th>Units In Stock</th>
-                    <th>Delete</th>
-                    <th>Edit</th>
-                </tr>
-                {
-                    show ? (
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Unit Price</th>
+                        <th>Units In Stock</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {show ? (
                         <div className="loader-div">
                             <div className="loader"></div>
                         </div>
                     ) : (
-                        datas.map(data => {
-                            return <tr key={data.id} style={{ color: data.discontinued ? "red" : data.unitsInStock > 10 ? "green" : "black" }}>
+                        datas.map(data => (
+                            <tr
+                                key={data.id}
+                                style={{
+                                    color: data.discontinued
+                                        ? "red"
+                                        : data.unitsInStock > 10
+                                            ? "green"
+                                            : "black",
+                                }}
+                            >
                                 <td>{data.id}</td>
                                 <td>{data.name}</td>
                                 <td>{data.unitPrice}$</td>
-                                <td >{data.unitsInStock}</td>
-                                <td><button onClick={() => handleDelete(data.id)}>Delete</button></td>
-                                <td><button>Edit</button></td>
+                                <td>{data.unitsInStock}</td>
+                                <td>
+                                    <button onClick={() => handleDelete(data.id)}>Delete</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleEdit(data.id)}>Edit</button>
+                                </td>
                             </tr>
-                        })
-                    )
-                }
+                        ))
+                    )}
+                </tbody>
             </table>
-            <div className="add" onClick={()=>handleAdd()}><h1>+</h1></div>
-            <div className="overlay" style={{display:display}}></div>
+            <div className="add" onClick={handleAdd}><h1>+</h1></div>
+            <div className="overlay" style={{ display: display }}></div>
         </div>
-    )
+    );
 }
 
-export default AxiosTable
+export default AxiosTable;
