@@ -66,9 +66,10 @@ function AxiosTable() {
 
         await axios.put(`https://northwind.vercel.app/api/products/${editId}`, updateData)
             .then((res) => {
-                const updatedDatas = datas.map(data =>
+                let updatedDatas = datas.map(data =>
                     data.id === editId ? res.data : data
                 );
+                console.log(res.data);
                 setDatas(updatedDatas);
             });
 
