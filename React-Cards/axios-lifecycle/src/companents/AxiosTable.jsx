@@ -8,9 +8,10 @@ function AxiosTable() {
     let [price, setPrice] = useState("");
     let [stock, setStok] = useState("");
     let [display, setDisplay] = useState("none");
+    let [editDisplay, setEditDisplay] = useState("none");
     let [editId, setEditId] = useState("");
 
-    // Data fetch
+    // Data axios
     function getData() {
         axios.get("https://northwind.vercel.app/api/products")
             .then(res => {
@@ -47,8 +48,8 @@ function AxiosTable() {
     // Edit (datani block etmek)
     function handleEdit(id) {
         setEditId(id);
-        setDisplay("block");
-        const editData = datas.find(data => data.id === id);
+        setEditDisplay("block");
+        let editData = datas.find(data => data.id === id);
         setName(editData.name);
         setPrice(editData.unitPrice);
         setStok(editData.unitsInStock);
@@ -74,12 +75,12 @@ function AxiosTable() {
         setName("");
         setPrice("");
         setStok("");
-        setDisplay("none");
+        setEditDisplay("none");
     }
 
-    // form acmak
+    // form acmaq
     function handleAdd() {
-        if (display === "none") {
+        if (display == "none") {
             setDisplay("block");
         }
     }
@@ -128,7 +129,7 @@ function AxiosTable() {
             </form>
 
             {/* Edit Form */}
-            <form onSubmit={handleEditForm} style={{ display: display }}>
+            <form onSubmit={handleEditForm} style={{ display: editDisplay }} className="editForm">
                 <h1>Edit Form</h1>
                 <div className="inputs">
                     <input
@@ -154,7 +155,7 @@ function AxiosTable() {
                     />
                 </div>
                 <button>Submit</button>
-                <div className="exit" onClick={handleExit}><h4>X</h4></div>
+                <div className="exit" onClick={() => setEditDisplay("none")}><h4>X</h4></div>
             </form>
 
             <table>
@@ -200,8 +201,9 @@ function AxiosTable() {
                     )}
                 </tbody>
             </table>
-            <div className="add" onClick={handleAdd}><h1>+</h1></div>
+            <div className="add" onClick={() => handleAdd()}><h1>+</h1></div>
             <div className="overlay" style={{ display: display }}></div>
+            <div className="overlay" style={{ display: editDisplay }}></div>
         </div>
     );
 }

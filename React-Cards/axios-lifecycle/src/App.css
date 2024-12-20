@@ -88,6 +88,32 @@ form {
     }
   }
 }
+.editForm {
+  width: 600px;
+  z-index: 3;
+  background-color: white;
+  padding: 20px;
+  position: fixed;
+  top: 30%;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    align-items: center;
+
+    input {
+      width: 560px;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 18px;
+      &:focus{
+        outline: none;
+        border: 1px solid #4CAF50;
+      }
+    }
+  }
+}
 
 /* Loader's CSS */
 .loader {
