@@ -149,7 +149,6 @@ color: white;
 position: fixed;
 right: 20px;
 bottom: 20px;
-/* padding: 10px; */
 font-size: 30px;
 border-radius: 50%;
 height: 80px;
@@ -168,7 +167,7 @@ h1{
   background-color: #fff;
   color: #4CAF50;
   border: 1px solid #4CAF50;
-  transform: rotate(720deg);
+  transform: rotate(180deg);
 }
 }
 .overlay{
