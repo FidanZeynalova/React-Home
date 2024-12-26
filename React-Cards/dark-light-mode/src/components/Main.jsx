@@ -11,7 +11,6 @@ function handleClick() {
     
     if(setBColor == "light"){
         setBColor("dark")
-        setColor("red")
         document.body.style = 'background: black'
     }
 }

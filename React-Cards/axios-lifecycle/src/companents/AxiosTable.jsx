@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function AxiosTable() {
+    // UseState teyin olunmuslar
     let [datas, setDatas] = useState([]);
     let [show, setShow] = useState(true);
     let [name, setName] = useState("");
@@ -11,7 +12,7 @@ function AxiosTable() {
     let [editDisplay, setEditDisplay] = useState("none");
     let [editId, setEditId] = useState("");
 
-    // Data axios
+    // Datalari getirmek
     function getData() {
         axios.get("https://northwind.vercel.app/api/products")
             .then(res => {
@@ -29,7 +30,7 @@ function AxiosTable() {
             });
     }
 
-    // Add form submit
+    // Add formu 
     async function handleAddForm(e) {
         e.preventDefault();
         let newData = {
@@ -49,7 +50,7 @@ function AxiosTable() {
     function handleEdit(id) {
         setEditId(id);
         setEditDisplay("block");
-        let editData = datas.find(data => data.id === id);
+        let editData = datas.find(data => data.id == id);
         setName(editData.name);
         setPrice(editData.unitPrice);
         setStok(editData.unitsInStock);
@@ -67,9 +68,8 @@ function AxiosTable() {
         await axios.put(`https://northwind.vercel.app/api/products/${editId}`, updateData)
             .then((res) => {
                 let updatedDatas = datas.map(data =>
-                    data.id === editId ? res.data : data
+                    data.id == editId ? res.data : data
                 );
-                console.log(res.data);
                 setDatas(updatedDatas);
             });
 
@@ -79,18 +79,19 @@ function AxiosTable() {
         setEditDisplay("none");
     }
 
-    // form acmaq
+    // form blockdusa none etmek nonedirse block etmek
     function handleAdd() {
         if (display == "none") {
             setDisplay("block");
         }
     }
 
-    // formu baglamaq
+    // formu baglamaq (exit)
     function handleExit() {
         setDisplay("none");
     }
 
+    // UseEffect hissesi
     useEffect(() => {
         getData();
     }, []);
@@ -103,26 +104,11 @@ function AxiosTable() {
             <form onSubmit={handleAddForm} style={{ display: display }}>
                 <h1>Add Form</h1>
                 <div className="inputs">
-                    <input
-                        type="text"
-                        required
-                        placeholder="Name..."
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                    <input type="text" required placeholder="Name..." value={name} onChange={(e) => setName(e.target.value)}
                     />
-                    <input
-                        type="number"
-                        required
-                        placeholder="unitPrice..."
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                    <input type="number" required placeholder="unitPrice..." value={price} onChange={(e) => setPrice(e.target.value)}
                     />
-                    <input
-                        type="number"
-                        required
-                        placeholder="unitsInStock..."
-                        value={stock}
-                        onChange={(e) => setStok(e.target.value)}
+                    <input type="number" required placeholder="unitsInStock..." value={stock} onChange={(e) => setStok(e.target.value)}
                     />
                 </div>
                 <button>Add</button>
@@ -133,32 +119,18 @@ function AxiosTable() {
             <form onSubmit={handleEditForm} style={{ display: editDisplay }} className="editForm">
                 <h1>Edit Form</h1>
                 <div className="inputs">
-                    <input
-                        type="text"
-                        required
-                        placeholder="New Name..."
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                    <input type="text" required placeholder="New Name..." value={name} onChange={(e) => setName(e.target.value)}
                     />
-                    <input
-                        type="number"
-                        required
-                        placeholder="New unitPrice..."
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                    <input type="number" required placeholder="New unitPrice..." value={price} onChange={(e) => setPrice(e.target.value)}
                     />
-                    <input
-                        type="number"
-                        required
-                        placeholder="New unitsInStock..."
-                        value={stock}
-                        onChange={(e) => setStok(e.target.value)}
+                    <input type="number" required placeholder="New unitsInStock..." value={stock} onChange={(e) => setStok(e.target.value)}
                     />
                 </div>
                 <button>Submit</button>
                 <div className="exit" onClick={() => setEditDisplay("none")}><h4>X</h4></div>
             </form>
 
+            {/* Datalari gosteren table */}
             <table>
                 <thead>
                     <tr>
@@ -180,23 +152,15 @@ function AxiosTable() {
                             <tr
                                 key={data.id}
                                 style={{
-                                    color: data.discontinued
-                                        ? "red"
-                                        : data.unitsInStock > 10
-                                            ? "green"
-                                            : "black",
+                                    color: data.discontinued ? "red" : data.unitsInStock > 10 ? "green" : "black",
                                 }}
                             >
                                 <td>{data.id}</td>
                                 <td>{data.name}</td>
                                 <td>{data.unitPrice}$</td>
                                 <td>{data.unitsInStock}</td>
-                                <td>
-                                    <button onClick={() => handleDelete(data.id)}>Delete</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => handleEdit(data.id)}>Edit</button>
-                                </td>
+                                <td><button onClick={() => handleDelete(data.id)}>Delete</button></td>
+                                <td><button onClick={() => handleEdit(data.id)}>Edit</button></td>
                             </tr>
                         ))
                     )}
